@@ -203,3 +203,61 @@ const commentsData = [
 ]
 ```
 
+## Que: How can we Build Live chat Like YT ? 
+Ans: 
+- Major Challanges : 
+    1. Get Live Data -> Data Layer
+    2. Update the UI -> UI Layer
+
+1. Get Live Data :- for getting live data we have two options :
+  a. Web Sockets : Web Sockets enable real-time, two-way communication between a client (like a web browser) and a server. Unlike traditional HTTP requests, where the client initiates communication and the server responds, Web Sockets allow for ongoing, full-duplex communication. This means both the client and server can send messages to each other independently. Web Sockets provide a persistent connection, reducing overhead and latency compared to techniques like polling.
+
+  eg: Whatsapp, Trading apps (Zerodha, Binance, etc...)
+
+  b. API/Long Polling : API/Long Polling is a technique used to simulate real-time updates over HTTP. In Long Polling, the client sends a request to the server, and the server holds the request open until new data is available or a timeout occurs. Once new data is available, the server responds to the request, and the client immediately sends another request to keep the connection open. This process repeats, allowing the server to push updates to the client as soon as they are available. While Long Polling can achieve real-time updates, it involves frequent requests and may not be as efficient as Web Sockets for continuous communication.
+
+  eg: Gamil, CricBuzz (25 second), YT Live chat
+
+```js
+const chatMessages = useSelector(state => state.chat.messages);
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    //* API Pooling after 2 sec
+    console.log("API Polling")
+
+    dispatch(addMessage({
+      name: generateRandomName(),
+      message: generateRandomMessage()
+    }))
+  }, 2000);
+
+  return () => clearInterval(timer);
+}, []);
+```
+
+2. Updating the User Interface : When we retrieve live data, it often includes a significant amount of information that needs to be displayed on the user interface (UI). This process of updating the UI with new data can be challenging, especially when dealing with a large volume of incoming data.
+
+## Que: In a live chat scenario with thousands or even millions of comments, why doesn't the web page freeze?
+Ans: In live chat, the continuous influx of data, especially with a large volume of comments, can overwhelm the browser if not managed efficiently. To prevent the browser from freezing and to provide a smoother user experience, we employ a technique to remove older chat messages from the Document Object Model (DOM) periodically. By removing older messages, we reduce the amount of content the browser needs to render and handle, preventing it from becoming overloaded and freezing. This approach ensures that the user can interact with the chat interface seamlessly, even with a significant amount of incoming data.
+
+```js
+reducers: {
+  addMessage: (state, action) => {
+    state.messages.splice(100, 1);
+    state.messages.unshift(action.payload);
+  },
+}
+```
+
+This line of code state.messages.splice(100, 1); will modify the messages array in the state object. Specifically, it will remove one element starting at index 100 from the messages array.
+
+  - 100 is the index at which the operation will start.
+  - 1 indicates the number of elements to remove from the array starting from the specified index.
+
+
+
+
+
+
+
