@@ -256,7 +256,54 @@ This line of code state.messages.splice(100, 1); will modify the messages array 
   - 1 indicates the number of elements to remove from the array starting from the specified index.
 
 
+## Que: Explain useMemo Hook with Example. 
+Ans: useMemo is a React Hook that lets you cache the result of a calculation between re-renders.
 
+useMemo is a React hook that memoizes the result of a function. In simpler terms, it remembers the output of a function so that if the function is called again with the same inputs, React can return the cached result instead of recalculating it. This helps optimize performance by avoiding unnecessary calculations.
+Certainly!
+
+```js
+const memoizedValue = useMemo(() => {
+  // Memoized computation or value
+  return computedValue;
+}, [dependency1, dependency2, ...]);
+```
+
+- "useMemo" takes a function and an array of dependencies.
+- It returns a memoized value.
+- The memoized value is recalculated only if any of the dependencies change.
+- Useful for optimizing expensive computations or values.
+
+For Exaxmple : 
+Imagine you have a React component that displays prime numbers based on user input. To find prime numbers, you use a function called "findPrimeNumber()". However, finding prime numbers is computationally intensive. Additionally, your component has a feature that allows users to toggle between dark mode and light mode.
+
+Now, every time the component re-renders (such as when the user toggles the theme), React recalculates prime numbers using "findPrimeNumber()", even if the input hasn't changed. This means unnecessary computations occur, slowing down your app.
+
+To optimize this process, you can use the "useMemo" hook. With "useMemo", you can memoize (remember) the result of "findPrimeNumber()" for a given input. This way, if the input remains the same during re-renders, React can reuse the previously calculated prime numbers instead of recalculating them. This reduces unnecessary computations and improves performance, especially for heavy operations like finding prime numbers.
+
+
+## Que: Explain useCallback Hook with Example. 
+Ans: useCallback is a React Hook that lets you cache a function definition between re-renders.
+
+it very much Similar to useMemo here we are not caching the value rather the entire function.
+
+```js
+const cachedFunction = useCallback(function, [depencencies])
+```
+
+## Que: useRef Hook. Why we use it and In Production level where we use it ? 
+Ans: useRef is a React Hook lets you reference a value thats not needed for rendering. 
+
+const ref = useRef(initialValue);
+
+The useRef hook in React is used to create a mutable object that persists across renders. It returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the entire lifetime of the component.
+
+In production, useRef is commonly used for accessing DOM elements, managing focus, or storing mutable values that don't trigger re-renders. It's a versatile hook that provides a way to interact with imperative code and manage stateful values outside the render cycle.
+
+For Example : 
+Let's consider the scenario in our component where we have a "let" variable and a state variable. When we increment the "let" variable, its value increases without triggering a re-render of the component, thus the updated value is not reflected on the screen. However, when the state variable changes, the entire component re-renders, displaying the updated value on the screen. The "let" variable gets re-initialized with each re-render, losing its previous value.
+
+To address this issue, we can utilize the "useRef" hook. By declaring a variable using "useRef", its value persists across component re-renders. When we modify the "useRef" variable, the component does not re-render, hence the updated value is not immediately visible on the screen. However, when we change the state variable, triggering a re-render, the "let" variable gets re-initialized, while the "useRef" variable retains its value, which is then reflected on the screen. This enables us to maintain the value of a variable across re-renders without it being reset.
 
 
 
