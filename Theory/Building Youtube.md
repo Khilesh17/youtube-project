@@ -291,6 +291,10 @@ it very much Similar to useMemo here we are not caching the value rather the ent
 const cachedFunction = useCallback(function, [depencencies])
 ```
 
+The useCallback hook is commonly used in production-level code in React applications where performance optimization is crucial, especially in scenarios involving passing callbacks to child components.
+
+- Optimizing Child Components: When passing callbacks to child components as props, useCallback can be used to memoize these callbacks. This ensures that the callbacks are only recreated if their dependencies change, preventing unnecessary re-renders of child components.
+
 ## Que: useRef Hook. Why we use it and In Production level where we use it ? 
 Ans: useRef is a React Hook lets you reference a value thats not needed for rendering. 
 
@@ -304,7 +308,3 @@ For Example :
 Let's consider the scenario in our component where we have a "let" variable and a state variable. When we increment the "let" variable, its value increases without triggering a re-render of the component, thus the updated value is not reflected on the screen. However, when the state variable changes, the entire component re-renders, displaying the updated value on the screen. The "let" variable gets re-initialized with each re-render, losing its previous value.
 
 To address this issue, we can utilize the "useRef" hook. By declaring a variable using "useRef", its value persists across component re-renders. When we modify the "useRef" variable, the component does not re-render, hence the updated value is not immediately visible on the screen. However, when we change the state variable, triggering a re-render, the "let" variable gets re-initialized, while the "useRef" variable retains its value, which is then reflected on the screen. This enables us to maintain the value of a variable across re-renders without it being reset.
-
-
-
-
