@@ -33,6 +33,8 @@ const CommentsList = ({ comments }) => {
                     <div key={comment.id}>
                         <Comment data={comment} />
                         {comment?.replies.length > 0 && <div className="pl-5 border-l border-l-black ml-5">
+                            
+                            {/* //* Nested Comments : Using Recurssion */}
                             <CommentsList comments={comment?.replies} />
                         </div>}
                     </div>
